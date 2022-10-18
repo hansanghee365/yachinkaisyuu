@@ -27,11 +27,11 @@ function collect(){
  takaTimeStamp = Date.now() - new Date("2022/2/01").getTime();
   // タイムスタンプ(ミリ秒)を月数に変換
  takaMonths = Math.floor( takaTimeStamp / ( 86400000 * daysMonth ));
- takaData = ((takaMonths*takaYachin)/498)*100;
+ takaData = ((takaMonths*takaYachin)/492)*100;
  nichiTimeStamp = Date.now() - new Date("2022/8/01").getTime();
   // タイムスタンプ(ミリ秒)を月数に変換
  nishiMonths = Math.floor( nichiTimeStamp / ( 86400000 * daysMonth ));
- nishiData = ((nishiMonths*nishiYachin)/498)*100;
+ nishiData = ((nishiMonths*nishiYachin)/495)*100;
 }
 collect();
 //「月別データ」
