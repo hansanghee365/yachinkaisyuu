@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>家賃回収シミュレーター</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <style>
+      h1{text-align: center;font-size: 3rem;}
+    </style>
+  </head>
+  
+  <body>
+    <h1>元金回収グラフ</h1>
+    <canvas id="stage"></canvas>
+    <script>
+//各利益計算ロジック
+
+const daysMonth = 365 /12;
+let takaTimeStamp,nichiTimeStamp,yumiTimeStamp;
+const takaYachin = 6.2;
+const nishiYachin = 7.2;
+const yumiUYachin = 6.5;
+let takaMonths,nishiMonths,yumiMonths;
+let takaData,nishiData,yumiData;
+
+function collect(){
+  // タイムスタンプ(ミリ秒)を月数に変換
+ takaTimeStamp = Date.now() - new Date("2022/2/01").getTime();
+  // タイムスタンプ(ミリ秒)を月数に変換
+ takaMonths = Math.floor( takaTimeStamp / ( 86400000 * daysMonth ));
+ takaData = ((takaMonths*takaYachin)/498)*100;
+ nichiTimeStamp = Date.now() - new Date("2022/8/01").getTime();
+  // タイムスタンプ(ミリ秒)を月数に変換
+ nishiMonths = Math.floor( nichiTimeStamp / ( 86400000 * daysMonth ));
+ nishiData = ((nishiMonths*nishiYachin)/498)*100;
+}
+collect();
+//「月別データ」
+var mydata = {
+  labels: ["TAKACHAN", "NISHI", "YUMI"],
+  datasets: [
+    {
+      label: '利益',
+      hoverBackgroundColor: "rgba(139, 87, 42, 1)",
+      backgroundColor: "rgba(245,166,35,1)",
+      data: [takaData, nishiData, 100],
+    }
+  ]
+};
+
+//「オプション設定」
+var options = {
+  title: {    
+    display: true,
+    text: 'サンプルチャート'
+  }
+};
+
+var canvas = document.getElementById('stage');
+var chart = new Chart(canvas, {
+
+  type: 'bar',  //グラフの種類
+  data: mydata,  //表示するデータ
+  options: {
+    scales: {
+      xAxes: [
+        {
+          scaleLabel: {                 // 軸ラベル
+            display: true,                // 表示設定
+            // labelString: '物件',    // ラベル
+            fontColor: "red",             // 文字の色
+            fontSize: 16                  // フォントサイズ
+                        },
+          ticks: {                      // 目盛り
+              fontColor: "Black",             // 目盛りの色
+              fontSize: 14                  // フォントサイズ
+          },
+          
+        }
+      ],
+      yAxes: [                           // Ｙ軸設定
+        {
+            display: true,                 // 表示の有無
+            scaleLabel: {                  // 軸ラベル
+                display: true,                 // 表示の有無
+                fontFamily: "sans-serif",      // フォントファミリー
+                fontColor: "blue",             // 文字の色
+                fontSize: 16                   // フォントサイズ
+            },
+            gridLines: {                   // 補助線
+                zeroLineColor: "black"         // y=0（Ｘ軸の色）
+            },
+            ticks: {                       // 目盛り
+                min: 0,                        // 最小値
+                max: 100,                       // 最大値
+                stepSize: 10,                   // 軸間隔
+                fontColor: "black",             // 目盛りの色
+                fontSize: 14                   // フォントサイズ
+            },
+        }
+    ],
+    }
+  }  //オプション設定
+
+});
+    </script>
+  </body>
+</html>
